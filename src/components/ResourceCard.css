@@ -1,0 +1,182 @@
+.resource-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #e8eae4;
+  border-radius: 16px;
+  background: #fffefa;
+  box-shadow: 0 4px 15px #243e3010;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.resource-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px #243e3015;
+}
+
+.resource-cover {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  border: none;
+  cursor: pointer;
+}
+
+.resource-cover::before,
+.resource-cover::after {
+  position: absolute;
+  content: '';
+  border: 1px solid #ffffff70;
+  border-radius: 50%;
+}
+
+.resource-cover::before {
+  width: 160px;
+  height: 160px;
+}
+
+.resource-cover::after {
+  width: 115px;
+  height: 115px;
+}
+
+.microbiology { background: #dcebdc; }
+.anatomy { background: #f1ded9; }
+.chemistry { background: #e4e2f4; }
+.equipment { background: #f3e8cb; }
+.biochemistry { background: #dce9ef; }
+.physics { background: #e8e3d9; }
+
+.cover-category {
+  position: absolute;
+  z-index: 1;
+  top: 14px;
+  left: 14px;
+  padding: 6px 9px;
+  border-radius: 6px;
+  background: #fffefaeb;
+  color: #52675a;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.cover-illustration {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 105px;
+  height: 120px;
+  border: 5px solid #fffefa;
+  border-radius: 9px;
+  background: #fffefa;
+  box-shadow: 0 10px 24px #203b321a;
+  font-size: 52px;
+  transform: rotate(-4deg);
+}
+
+.cover-brand {
+  position: absolute;
+  right: 14px;
+  bottom: 12px;
+  color: #52675a;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.resource-details {
+  padding: 17px;
+}
+
+.resource-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+  color: #778279;
+  font-size: 10px;
+}
+
+.resource-condition {
+  color: #397357;
+}
+
+.resource-title {
+  display: block;
+  margin: 12px 0 8px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #263e32;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.resource-title:hover {
+  color: #397357;
+}
+
+.resource-description {
+  min-height: 57px;
+  margin: 0;
+  color: #778279;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.resource-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 17px;
+  padding-top: 14px;
+  border-top: 1px solid #edf0e9;
+}
+
+.student-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #778279;
+  font-size: 10px;
+}
+
+.student-avatar {
+  display: grid;
+  place-items: center;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #eaf2e9;
+  color: #397357;
+  font-weight: 700;
+}
+
+.swap-button {
+  padding: 9px 12px;
+  border: 1px solid #246b52;
+  border-radius: 8px;
+  background: #246b52;
+  color: white;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.swap-button:hover {
+  background: #1b523e;
+}
+
+.swap-button.swapped {
+  border-color: #cbdcc9;
+  background: #eaf2e9;
+  color: #246b52;
+}

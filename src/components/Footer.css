@@ -1,0 +1,22 @@
+.bookswap-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 35px;
+  padding: 22px 0;
+  border-top: 1px solid #e5e9e1;
+  color: #849087;
+  font-size: 11px;
+}
+
+.footer-brand {
+  color: #397357;
+  font-weight: 800;
+}
+
+@media (max-width: 600px) {
+  .bookswap-footer {
+    flex-direction: column;
+    gap: 8px;
+  }
+}

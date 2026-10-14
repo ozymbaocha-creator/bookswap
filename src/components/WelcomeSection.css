@@ -1,0 +1,98 @@
+.welcome-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  min-height: 280px;
+  padding: 40px 6%;
+  overflow: hidden;
+  border-radius: 22px;
+  background: #eaf2e9;
+}
+
+.welcome-copy {
+  max-width: 650px;
+}
+
+.welcome-eyebrow {
+  color: #397357;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.welcome-copy h1 {
+  margin: 15px 0;
+  color: #203b32;
+  font-family: Georgia, serif;
+  font-size: clamp(32px, 4.5vw, 48px);
+  line-height: 1.15;
+  letter-spacing: -1px;
+}
+
+.welcome-copy h1 span {
+  color: #397357;
+}
+
+.welcome-copy p {
+  max-width: 490px;
+  color: #617267;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.welcome-art {
+  position: relative;
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 190px;
+  height: 190px;
+  border: 1px solid #cbdcc9;
+  border-radius: 50%;
+  background: #dceadb;
+}
+
+.welcome-book {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 85px;
+  height: 105px;
+  border: 5px solid #fffefa;
+  border-radius: 9px;
+  background: #fffefa;
+  box-shadow: 0 10px 24px #254b3418;
+  font-size: 42px;
+}
+
+.book-one {
+  transform: translate(-18px, 8px) rotate(-12deg);
+}
+
+.book-two {
+  transform: translate(24px, -8px) rotate(10deg);
+}
+
+.welcome-star {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  color: #397357;
+  font-size: 28px;
+}
+
+@media (max-width: 600px) {
+  .welcome-section {
+    min-height: auto;
+    padding: 28px 22px;
+  }
+
+  .welcome-copy h1 {
+    font-size: 32px;
+  }
+
+  .welcome-art {
+    display: none;
+  }
+}

@@ -1,0 +1,48 @@
+.resource-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.empty-results {
+  padding: 50px 20px;
+  border: 1px dashed #d8e0d5;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.empty-icon {
+  color: #397357;
+  font-size: 38px;
+}
+
+.empty-results h3 {
+  color: #203b32;
+}
+
+.empty-results p {
+  margin-bottom: 20px;
+  color: #778279;
+  font-size: 13px;
+}
+
+.empty-results button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #246b52;
+  color: white;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .resource-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .resource-grid {
+    grid-template-columns: 1fr;
+  }
+}

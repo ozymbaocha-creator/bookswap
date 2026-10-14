@@ -1,0 +1,40 @@
+.category-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0 26px;
+}
+
+.category-button {
+  padding: 10px 16px;
+  border: 1px solid #e1e7de;
+  border-radius: 24px;
+  background: #fffefa;
+  color: #647168;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+
+.category-button:hover {
+  border-color: #80a48c;
+  color: #246b52;
+}
+
+.category-button.selected {
+  border-color: #246b52;
+  background: #246b52;
+  color: white;
+}
+
+@media (max-width: 600px) {
+  .category-filters {
+    gap: 8px;
+  }
+
+  .category-button {
+    padding: 9px 12px;
+    font-size: 11px;
+  }
+}
+
