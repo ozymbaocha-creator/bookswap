@@ -1,29 +1,34 @@
 # BookSwap — Campus Resource Exchange
 
-BookSwap is a campus-based resource exchange web application designed to help university students discover and exchange textbooks, course materials, and essential student equipment.
+BookSwap is a campus-based resource discovery and exchange frontend designed to help university students find textbooks, course materials, and essential student equipment.
 
 ## Problem Statement
 
-University students often need affordable access to textbooks, course outlines, and other learning materials. BookSwap aims to make it easier for students to discover available resources and connect with other students on campus.
+University students often need affordable access to textbooks, course outlines, and other learning materials. BookSwap provides a simple interface for discovering available resources and viewing uploader contact information.
 
 ## Project Objectives
 
 * Help students discover available academic resources.
-* Organize resources by category.
+* Organise resources by category.
 * Allow students to search for specific materials.
 * Display resource descriptions and uploader contact information.
-* Provide a simple, accessible, and responsive user interface.
+* Provide a responsive and accessible user interface.
+* Practise reusable React components and asynchronous data loading.
 
 ## Current Features
 
 * Welcome section introducing the platform.
 * Resource cards displaying available materials.
-* Search interface for finding resources.
-* Category filters for organizing resources.
-* Resource details view with descriptions and contact information.
+* Search functionality for finding resources.
+* Category filters for organising resources.
+* Resource details modal with descriptions and uploader contact information.
+* Asynchronous resource loading using the Fetch API.
+* Resource data stored in a local JSON file.
+* Loading message while resources are being fetched.
+* Error message and Retry button when resource loading fails.
+* Empty state when no resources match the search or selected category.
+* Clear filters option when no search results are found.
 * Responsive layout for mobile devices.
-
-*Note: Features listed here reflect the current homepage prototype. Additional functionality will be developed as the project progresses.*
 
 ## Technologies Used
 
@@ -32,7 +37,16 @@ University students often need affordable access to textbooks, course outlines, 
 * Vite
 * HTML
 * CSS
+* JSON
+* Fetch API
 * Git and GitHub
+* Vercel for deployment
+
+## Data Source
+
+BookSwap currently loads sample resource data from `public/resources.json` using the Fetch API. The data includes resource titles, categories, departments, descriptions, conditions, and sample uploader contact details.
+
+The project does not currently use a backend server or database. The resource data is provided for frontend development and demonstration.
 
 ## Getting Started
 
@@ -60,19 +74,38 @@ Install Node.js and npm on your computer.
 
 5. Open the local URL displayed in your terminal.
 
+If PowerShell blocks the npm script, try:
+
+```bash
+npm.cmd run dev
+```
+
 ### Mobile Testing
 
 To test the development version on a phone connected to the same network as your computer, run:
 
 ```bash
-npm run dev -- --host 0.0.0.0
+npm.cmd run dev -- --host 0.0.0.0
 ```
 
 Then open the Network URL displayed by Vite on your phone.
 
+## Testing
+
+The following checks have been completed during development:
+
+* Confirmed that all six sample resources appear on the Discover page.
+* Confirmed that searching for “Microbiology” filters the resources correctly.
+* Confirmed that selecting the Equipment category filters the results correctly.
+* Confirmed that a search with no matching results displays an empty state and a Clear filters option.
+* Tested the resource loading error state and Retry button.
+* Confirmed that resources appear again after restoring the correct JSON file path.
+
 ## Project Status
 
-BookSwap is currently in the frontend prototype stage. The homepage and its core discovery interactions have been implemented. Further development will follow the project requirements and planned milestones.
+BookSwap is a frontend prototype developed as part of BuildLab Stage 1. The current implementation includes resource discovery, search and category filtering, resource details, and asynchronous loading of local JSON data.
+
+Further development may include additional interactions, improved data persistence, and backend integration, depending on the project requirements.
 
 ## Project Purpose
 
