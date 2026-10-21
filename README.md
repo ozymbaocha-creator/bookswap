@@ -111,6 +111,25 @@ Further development may include additional interactions, improved data persisten
 
 This project is being developed as part of a frontend development learning experience with BuildLab.
 
+
+## Component Map
+
+The Discover page is organised into reusable React components.
+
+* `Discover.jsx`: Main page component. Manages resource loading, search, filtering, selected item, and swap state.
+* `Navbar.jsx`: Displays the navigation.
+* `WelcomeSection.jsx`: Introduces the BookSwap platform.
+* `SearchBar.jsx`: Accepts the user's search input through props.
+* `CategoryFilter.jsx`: Allows users to select a resource category.
+* `ResourceGrid.jsx`: Displays the filtered resource list.
+* `ResourceCard.jsx`: Displays an individual resource.
+* `ItemDetailsModal.jsx`: Shows details for the selected resource.
+* `Footer.jsx`: Displays the page footer.
+* `public/resources.json`: Provides the sample resource data loaded by the Fetch API.
+
+The Discover page passes data and event handlers to child components through props. Resource loading, search, filtering, and modal selection state are managed in the Discover component.
+
+
 ## Author
 
 Gospel Bright Mbaocha
