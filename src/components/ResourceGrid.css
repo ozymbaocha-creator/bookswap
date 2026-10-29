@@ -1,7 +1,9 @@
+
 .resource-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 22px;
+  align-items: stretch;
 }
 
 .empty-results {
@@ -12,7 +14,7 @@
 }
 
 .empty-icon {
-  color: #397357;
+  color: #0B2E20;
   font-size: 38px;
 }
 
@@ -24,25 +26,51 @@
   margin-bottom: 20px;
   color: #778279;
   font-size: 13px;
+  line-height: 1.6;
 }
 
 .empty-results button {
   padding: 10px 16px;
-  border: none;
+  border: 1px solid #0B2E20;
   border-radius: 8px;
-  background: #246b52;
+  background: #0B2E20;
   color: white;
   cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+.empty-results button:hover {
+  background: #123D2B;
+}
+
+.empty-results button:focus-visible {
+  outline: 2px solid #0B2E20;
+  outline-offset: 3px;
 }
 
 @media (max-width: 900px) {
   .resource-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
   }
 }
 
 @media (max-width: 600px) {
   .resource-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .empty-results {
+    padding: 36px 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .empty-results button {
+    transition: none;
   }
 }

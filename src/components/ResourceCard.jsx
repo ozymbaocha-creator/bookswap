@@ -1,3 +1,5 @@
+
+import { Button } from '@/components/ui/button'
 import './ResourceCard.css'
 
 function ResourceCard({ item, onSwap, onViewDetails, isSwapped }) {
@@ -10,16 +12,20 @@ function ResourceCard({ item, onSwap, onViewDetails, isSwapped }) {
         aria-label={`View details for ${item.title}`}
       >
         <span className="cover-category">{item.category}</span>
+
         <span className="cover-illustration" aria-hidden="true">
           {item.cover}
         </span>
+
         <span className="cover-brand">BOOKSWAP</span>
       </button>
 
       <div className="resource-details">
         <div className="resource-meta">
           <span>{item.department}</span>
-          <span className="resource-condition">{item.condition}</span>
+          <span className="resource-condition">
+            {item.condition}
+          </span>
         </div>
 
         <button
@@ -30,7 +36,9 @@ function ResourceCard({ item, onSwap, onViewDetails, isSwapped }) {
           {item.title}
         </button>
 
-        <p className="resource-description">{item.description}</p>
+        <p className="resource-description">
+          {item.description}
+        </p>
 
         <div className="resource-card-footer">
           <span className="student-label">
@@ -38,13 +46,18 @@ function ResourceCard({ item, onSwap, onViewDetails, isSwapped }) {
             Student listing
           </span>
 
-          <button
+          <Button
             type="button"
             className={`swap-button ${isSwapped ? 'swapped' : ''}`}
+            aria-label={
+              isSwapped
+                ? `Remove or view swapped status for ${item.title}`
+                : `Swap ${item.title}`
+            }
             onClick={() => onSwap(item)}
           >
             {isSwapped ? '✓ Added' : 'Swap item'}
-          </button>
+          </Button>
         </div>
       </div>
     </article>
