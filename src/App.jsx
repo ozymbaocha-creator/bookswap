@@ -1,6 +1,9 @@
+
 import Discover from './pages/Discover'
 import AuthPage from './pages/AuthPage'
 import StatusPage from './pages/StatusPage'
+import UploadPage from './pages/UploadPage'
+import DashboardPage from './pages/DashboardPage'
 import { getCurrentUser } from './lib/auth'
 
 const protectedPages = {
@@ -15,15 +18,18 @@ function App() {
   if (path === '/' || path === '/discover') return <Discover />
   if (path === '/login') return <AuthPage mode="login" />
   if (path === '/signup') return <AuthPage mode="signup" />
+
   if (path === '/unauthorized') {
     return user
-      ? <StatusPage type="coming-soon" title="Dashboard" />
+      ? <DashboardPage />
       : <StatusPage type="unauthorized" />
   }
 
   if (protectedPages[path]) {
     if (!user) return <StatusPage type="unauthorized" />
-    return <StatusPage type="coming-soon" title={protectedPages[path]} />
+
+    if (path === '/upload') return <UploadPage />
+    if (path === '/dashboard') return <DashboardPage />
   }
 
   return <StatusPage type="not-found" />

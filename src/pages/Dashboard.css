@@ -1,0 +1,177 @@
+
+.dashboard-page {
+  min-height: 100vh;
+  background: #fbfaf6;
+}
+
+.dashboard-main {
+  width: min(100% - 32px, 1000px);
+  margin: 0 auto;
+  padding: 50px 0 70px;
+}
+
+.dashboard-heading {
+  margin-bottom: 30px;
+}
+
+.dashboard-eyebrow {
+  color: #397357;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.dashboard-heading h1 {
+  margin: 10px 0;
+  color: #203b32;
+  font-size: clamp(28px, 5vw, 38px);
+}
+
+.dashboard-heading p {
+  color: #778279;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.dashboard-section {
+  margin-bottom: 20px;
+  padding: 24px;
+  border: 1px solid #e8eae4;
+  border-radius: 14px;
+  background: #fffefa;
+  box-shadow: 0 4px 15px #243e3010;
+}
+
+.dashboard-section h2 {
+  margin: 0 0 16px;
+  color: #263e32;
+  font-size: 18px;
+}
+
+.dashboard-section p {
+  margin: 10px 0;
+  color: #778279;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+@media (max-width: 480px) {
+  .dashboard-main {
+    padding-top: 35px;
+  }
+
+  .dashboard-section {
+    padding: 18px;
+  }
+}
+
+
+.dashboard-upload {
+  margin-top: 18px;
+  padding: 18px;
+  border: 1px solid #e8eae4;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.dashboard-upload h3 {
+  margin: 0 0 12px;
+  color: #263e32;
+  font-size: 16px;
+}
+
+.dashboard-upload p {
+  margin: 8px 0;
+}
+
+.dashboard-upload button {
+  margin: 12px 10px 0 0;
+  padding: 10px 16px;
+  border: 1px solid #dfe5dc;
+  border-radius: 7px;
+  background: #f4f6f1;
+  color: #263e32;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.dashboard-upload button:hover {
+  border-color: #397357;
+}
+
+.dashboard-upload button[type="submit"] {
+  border-color: #246b52;
+  background: #246b52;
+  color: white;
+}
+
+.dashboard-edit-field {
+  display: grid;
+  gap: 7px;
+  margin-bottom: 15px;
+}
+
+.dashboard-edit-field label {
+  color: #263e32;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.dashboard-edit-field input,
+.dashboard-edit-field select,
+.dashboard-edit-field textarea {
+  width: 100%;
+  padding: 11px;
+  border: 1px solid #dfe5dc;
+  border-radius: 7px;
+  background: #fffefa;
+  color: #263e32;
+  font: inherit;
+  font-size: 13px;
+}
+
+.dashboard-edit-field textarea {
+  resize: vertical;
+}
+
+.dashboard-section > button {
+  margin-top: 12px;
+  padding: 10px 18px;
+  border: 1px solid #246b52;
+  border-radius: 7px;
+  background: #eff3f1;
+  color: #1b0202;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+.dashboard-section > button:hover {
+  background: #1b523e;
+}
+
+.delete-account-button {
+  margin-top: 12px;
+  padding: 10px 18px;
+  border: 1px solid #c94b4b;
+  border-radius: 7px;
+  background: #fff;
+  color: #c94b4b;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.delete-account-button:hover {
+  background: #c94b4b;
+  color: #fff;
+}
+
+.delete-account-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+

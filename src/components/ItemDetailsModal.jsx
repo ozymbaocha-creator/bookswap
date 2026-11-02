@@ -70,9 +70,17 @@ function ItemDetailsModal({ item, onClose }) {
           ×
         </button>
 
-        <div className={`modal-cover ${item.coverClass}`}>
-          <span aria-hidden="true">{item.cover}</span>
-        </div>
+    <div className={`modal-cover ${item.coverClass || ''}`}>
+        {item.imageUrl ? (
+          <img
+            className="modal-photo"
+            src={item.imageUrl}
+            alt={item.title}
+          />
+      ) : (
+        <span aria-hidden="true">{item.cover}</span>
+      )}
+    </div>
 
         <span className="modal-category">{item.category}</span>
         <h2 id="item-modal-title">{item.title}</h2>

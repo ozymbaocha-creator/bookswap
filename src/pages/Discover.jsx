@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Navbar from '../components/Navbar'
 import WelcomeSection from '../components/WelcomeSection'
 import SearchBar from '../components/SearchBar'
@@ -8,6 +9,7 @@ import ItemDetailsModal from '../components/ItemDetailsModal'
 import Footer from '../components/Footer'
 import './Discover.css'
 import { getCurrentUser } from '../lib/auth'
+import { getUploadedResources } from '../lib/resourceStorage'
 
 async function fetchResources() {
   const response = await fetch('/resources.json')
@@ -32,44 +34,61 @@ function Discover() {
   const [search, setSearch] = useState('')
   const [activeCategory, setActiveCategory] = useState('All Items')
   const [selectedItem, setSelectedItem] = useState(null)
-  const [swappedItems, setSwappedItems] = useState([])
+  const [swappedItems, setSwappedItems] = useState(() => {
+    const user = getCurrentUser()
+
+    if (!user) return []
+
+    try {
+      const history = JSON.parse(
+        localStorage.getItem(`bookswap-swaps-${user.email}`) || '[]'
+      )
+
+      return history.map((item) => item.id)
+    } catch {
+      return []
+    }
+  })
+  const imageUrlsRef = useRef([])
 
   const loadResources = useCallback(async () => {
     setLoading(true)
     setError('')
 
+    imageUrlsRef.current.forEach((url) => URL.revokeObjectURL(url))
+    imageUrlsRef.current = []
+
     try {
-      setResources(await fetchResources())
+      const [baseResources, uploadedResources] = await Promise.all([
+        fetchResources(),
+        getUploadedResources(),
+      ])
+
+      const savedResources = uploadedResources.map((item) => {
+        if (!item.image) return item
+
+        const imageUrl = URL.createObjectURL(item.image)
+        imageUrlsRef.current.push(imageUrl)
+
+        return { ...item, imageUrl }
+      })
+
+      setResources([...savedResources, ...baseResources])
     } catch (err) {
       console.error('BookSwap resource loading error:', err)
-      setError('We could not load the resources. Please check your connection and try again.')
+      setError('We could not load the resources. Please try again.')
     } finally {
       setLoading(false)
     }
   }, [])
 
   useEffect(() => {
-    let cancelled = false
+    loadResources()
 
-    async function loadInitialResources() {
-      try {
-        const data = await fetchResources()
-        if (!cancelled) setResources(data)
-      } catch (err) {
-        console.error('BookSwap resource loading error:', err)
-        if (!cancelled) {
-          setError('We could not load the resources. Please check your connection and try again.')
-        }
-      } finally {
-        if (!cancelled) setLoading(false)
-      }
-    }
-
-    loadInitialResources()
     return () => {
-      cancelled = true
+      imageUrlsRef.current.forEach((url) => URL.revokeObjectURL(url))
     }
-  }, [])
+  }, [loadResources])
 
   const filteredResources = useMemo(() => {
     const searchTerm = search.trim().toLowerCase()
@@ -77,6 +96,7 @@ function Discover() {
     return resources.filter((item) => {
       const matchesCategory =
         activeCategory === 'All Items' || item.category === activeCategory
+
       const matchesSearch = [
         item.title,
         item.category,
@@ -89,18 +109,42 @@ function Discover() {
   }, [resources, search, activeCategory])
 
   function handleSwap(item) {
-    if (!getCurrentUser()) {
-      window.location.href = '/unauthorized'
-      return
-    }
+  const user = getCurrentUser()
 
-    setSwappedItems((current) =>
-      current.includes(item.id)
-        ? current.filter((id) => id !== item.id)
-        : [...current, item.id]
-    )
+  if (!user) {
+    window.location.href = '/unauthorized'
+    return
   }
 
+  const storageKey = `bookswap-swaps-${user.email}`
+
+  const history = JSON.parse(
+    localStorage.getItem(storageKey) || '[]'
+  )
+
+  const alreadyAdded = history.some(
+    (resource) => resource.id === item.id
+  )
+
+  const updatedHistory = alreadyAdded
+    ? history.filter((resource) => resource.id !== item.id)
+    : [
+        ...history,
+        {
+          id: item.id,
+          title: item.title,
+          category: item.category,
+          condition: item.condition,
+          department: item.department,
+          uploader: item.uploader,
+          swappedAt: new Date().toISOString(),
+        },
+      ]
+
+  localStorage.setItem(storageKey, JSON.stringify(updatedHistory))
+
+  setSwappedItems(updatedHistory.map((resource) => resource.id))
+}
   function clearFilters() {
     setSearch('')
     setActiveCategory('All Items')
@@ -127,13 +171,16 @@ function Discover() {
           </div>
 
           <SearchBar search={search} onSearchChange={setSearch} />
+
           <CategoryFilter
             activeCategory={activeCategory}
             onCategoryChange={setActiveCategory}
           />
 
           {loading ? (
-            <p role="status" className="resource-message">Loading campus resources...</p>
+            <p role="status" className="resource-message">
+              Loading campus resources...
+            </p>
           ) : error ? (
             <div className="resource-message" role="alert">
               <p>{error}</p>

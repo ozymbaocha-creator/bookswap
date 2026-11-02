@@ -7,15 +7,23 @@ function ResourceCard({ item, onSwap, onViewDetails, isSwapped }) {
     <article className="resource-card">
       <button
         type="button"
-        className={`resource-cover ${item.coverClass}`}
+        className={`resource-cover ${item.coverClass || ''}`}
         onClick={() => onViewDetails(item)}
         aria-label={`View details for ${item.title}`}
       >
         <span className="cover-category">{item.category}</span>
 
-        <span className="cover-illustration" aria-hidden="true">
-          {item.cover}
-        </span>
+        {item.imageUrl ? (
+          <img
+            className="cover-photo"
+            src={item.imageUrl}
+            alt={item.title}
+          />
+        ) : (
+          <span className="cover-illustration" aria-hidden="true">
+            {item.cover}
+          </span>
+        )}
 
         <span className="cover-brand">BOOKSWAP</span>
       </button>

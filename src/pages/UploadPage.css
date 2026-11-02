@@ -1,0 +1,171 @@
+
+.upload-page {
+  min-height: 100vh;
+  background: #fbfaf6;
+}
+
+.upload-main {
+  width: min(100% - 32px, 680px);
+  margin: 0 auto;
+  padding: 55px 0 70px;
+}
+
+.upload-heading {
+  margin-bottom: 30px;
+}
+
+.upload-eyebrow {
+  color: #397357;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.upload-heading h1 {
+  margin: 10px 0;
+  color: #203b32;
+  font-size: clamp(28px, 5vw, 38px);
+}
+
+.upload-heading p {
+  color: #778279;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.upload-form {
+  display: grid;
+  gap: 20px;
+  padding: 28px;
+  border: 1px solid #e8eae4;
+  border-radius: 16px;
+  background: #fffefa;
+  box-shadow: 0 4px 15px #243e3010;
+}
+
+.upload-field {
+  display: grid;
+  gap: 8px;
+}
+
+.upload-field label {
+  color: #263e32;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.upload-field input,
+.upload-field select,
+.upload-field textarea {
+  width: 100%;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid #dfe5dc;
+  border-radius: 8px;
+  outline: none;
+  background: #fffefa;
+  color: #263e32;
+  font: inherit;
+  font-size: 13px;
+}
+
+.upload-field input:focus,
+.upload-field select:focus,
+.upload-field textarea:focus {
+  border-color: #397357;
+  box-shadow: 0 0 0 3px #39735718;
+}
+
+.upload-field input[readonly] {
+  background: #f4f6f1;
+  color: #778279;
+}
+
+.upload-field textarea {
+  resize: vertical;
+}
+
+.upload-field small {
+  color: #778279;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.upload-preview {
+  display: grid;
+  gap: 10px;
+}
+
+.upload-preview p {
+  margin: 0;
+  color: #263e32;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.upload-preview img {
+  width: 100%;
+  max-height: 260px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: #f4f6f1;
+}
+
+.upload-preview button {
+  justify-self: start;
+  border: none;
+  background: transparent;
+  color: #397357;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.upload-error,
+.upload-success {
+  margin: 0;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.upload-error {
+  background: #fff0ee;
+  color: #a33d32;
+}
+
+.upload-success {
+  background: #eaf2e9;
+  color: #246b52;
+}
+
+.upload-submit {
+  min-height: 46px;
+  border: none;
+  border-radius: 8px;
+  background: #246b52;
+  color: white;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.upload-submit:hover {
+  background: #1b523e;
+}
+
+.upload-submit:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+@media (max-width: 480px) {
+  .upload-main {
+    padding-top: 35px;
+  }
+
+  .upload-form {
+    padding: 20px;
+  }
+}

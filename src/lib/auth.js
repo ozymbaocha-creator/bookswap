@@ -1,3 +1,4 @@
+
 const USER_KEY = 'bookswap-user'
 const ACCOUNTS_KEY = 'bookswap-accounts'
 
@@ -42,6 +43,7 @@ export function signUp(name, email, phone, department, password) {
     phone: account.phone,
     department: account.department,
   }
+
   sessionStorage.setItem(USER_KEY, JSON.stringify(user))
 
   return { user }
@@ -50,7 +52,9 @@ export function signUp(name, email, phone, department, password) {
 export function signIn(email, password) {
   const normalizedEmail = email.trim().toLowerCase()
   const account = getAccounts().find(
-    (savedAccount) => savedAccount.email === normalizedEmail && savedAccount.password === password
+    (savedAccount) =>
+      savedAccount.email === normalizedEmail &&
+      savedAccount.password === password
   )
 
   if (!account) {
@@ -63,10 +67,75 @@ export function signIn(email, password) {
     phone: account.phone,
     department: account.department,
   }
+
   sessionStorage.setItem(USER_KEY, JSON.stringify(user))
+  return { user }
+}
+
+export function updateAccount(currentEmail, updates) {
+  const accounts = getAccounts()
+  const normalizedEmail = updates.email.trim().toLowerCase()
+
+  const accountIndex = accounts.findIndex(
+    (account) => account.email === currentEmail
+  )
+
+  if (accountIndex === -1) {
+    return { error: 'Your account could not be found.' }
+  }
+
+  const duplicateEmail = accounts.some(
+    (account, index) =>
+      index !== accountIndex && account.email === normalizedEmail
+  )
+
+  if (duplicateEmail) {
+    return { error: 'This email is already being used by another account.' }
+  }
+
+  const updatedAccount = {
+    ...accounts[accountIndex],
+    name: updates.name.trim(),
+    email: normalizedEmail,
+    phone: updates.phone.trim(),
+    department: updates.department.trim(),
+  }
+
+  accounts[accountIndex] = updatedAccount
+  localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(accounts))
+
+  const user = {
+    name: updatedAccount.name,
+    email: updatedAccount.email,
+    phone: updatedAccount.phone,
+    department: updatedAccount.department,
+  }
+
+  sessionStorage.setItem(USER_KEY, JSON.stringify(user))
+
   return { user }
 }
 
 export function signOut() {
   sessionStorage.removeItem(USER_KEY)
+}
+
+export function deleteAccount(email) {
+  const normalizedEmail = email.trim().toLowerCase()
+  const accounts = getAccounts()
+
+  const updatedAccounts = accounts.filter(
+    (account) => account.email !== normalizedEmail
+  )
+
+  if (updatedAccounts.length === accounts.length) {
+    return { error: 'Account could not be found.' }
+  }
+
+  localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(updatedAccounts))
+  localStorage.removeItem(`bookswap-swaps-${normalizedEmail}`)
+
+  signOut()
+
+  return { success: true }
 }
