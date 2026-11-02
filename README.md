@@ -29,6 +29,24 @@ University students often need affordable access to textbooks, course outlines, 
 * Empty state when no resources match the search or selected category.
 * Clear filters option when no search results are found.
 * Responsive layout for mobile devices.
+* Meaningful path-based navigation and placeholder pages for unfinished routes.
+* Keyboard focus styling and modal keyboard support (manual verification is still recommended).
+
+## Navigation and Status Pages
+
+The application uses meaningful path URLs rather than hash links:
+
+- `/discover`: resource discovery.
+- `/uploads`: Coming Soon placeholder for the planned My Uploads page.
+- `/history`: Coming Soon placeholder for the planned My History page.
+- `/unauthorized`: an informational 401-style page for the prototype.
+- Unknown paths show a not-found page.
+
+Sign-up stores demo account records in the browser localStorage, and sign-in checks the submitted email and password against those records. The active session is stored in sessionStorage and ends when the browser session is cleared. This is prototype behaviour only: passwords are not securely hashed and browser storage can be inspected or changed. Never use real passwords or sensitive personal information.
+
+The unauthorized page is a frontend demonstration only. BookSwap does not currently have real authentication, protected server routes, or an HTTP 401 response from a backend. Do not treat the placeholder as security enforcement; real authorization requires a backend or authentication provider.
+
+Direct path access is configured for Vercel in `vercel.json`.
 
 ## Technologies Used
 
@@ -123,7 +141,8 @@ The Discover page is organised into reusable React components.
 * `CategoryFilter.jsx`: Allows users to select a resource category.
 * `ResourceGrid.jsx`: Displays the filtered resource list.
 * `ResourceCard.jsx`: Displays an individual resource.
-* `ItemDetailsModal.jsx`: Shows details for the selected resource.
+* `ItemDetailsModal.jsx`: Shows details for the selected resource and manages keyboard focus while open.
+* `StatusPage.jsx`: Reusable Coming Soon, unauthorized, and not-found page layouts.
 * `Footer.jsx`: Displays the page footer.
 * `public/resources.json`: Provides the sample resource data loaded by the Fetch API.
 

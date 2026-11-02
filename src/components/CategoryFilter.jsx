@@ -9,7 +9,7 @@ const categories = [
 
 function CategoryFilter({ activeCategory, onCategoryChange }) {
   return (
-    <div className="category-filters" aria-label="Filter by category">
+    <div className="category-filters" role="group" aria-label="Filter by category">
       {categories.map((category) => (
         <button
           key={category}

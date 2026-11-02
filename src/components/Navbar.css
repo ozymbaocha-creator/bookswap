@@ -60,6 +60,8 @@
   background: white;
   color: #37463c;
   cursor: pointer;
+  font: inherit;
+  text-decoration: none;
 }
 
 .profile-avatar {
@@ -94,5 +96,59 @@
 
   .profile-label {
     display: none;
+  }
+}
+
+.navbar-account {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.account-link,
+.account-signup {
+  color: #246b52;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.account-signup {
+  padding: 9px 13px;
+  border-radius: 8px;
+  background: #246b52;
+  color: #fff;
+}
+
+.account-signup:hover {
+  background: #1b523e;
+}
+
+.sign-out-link {
+  padding: 6px 0;
+  border: 0;
+  background: transparent;
+  color: #69736b;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+}
+
+@media (max-width: 650px) {
+  .navbar-account {
+    margin-left: auto;
+  }
+
+  .account-link,
+  .account-signup {
+    font-size: 12px;
+  }
+
+  .navbar-profile {
+    padding: 4px;
+  }
+
+  .sign-out-link {
+    font-size: 11px;
   }
 }

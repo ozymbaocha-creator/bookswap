@@ -165,24 +165,26 @@
 /* Original Swap button colours */
 .swap-button {
   flex-shrink: 0;
+  min-height: 36px;
+  height: auto;
   padding: 9px 12px;
-  border: 1px solid #246b52 !important;
-  border-radius: 8px !important;
-  background: #246b52 !important;
-  color: white !important;
+  border: 1px solid #246b52;
+  border-radius: 8px;
+  background: #246b52;
+  color: white;
   cursor: pointer;
-  font-size: 11px !important;
-  font-weight: 700 !important;
+  font-size: 11px;
+  font-weight: 700;
 }
 
 .swap-button:hover {
-  background: #1b523e !important;
+  background: #1b523e;
 }
 
 .swap-button.swapped {
-  border-color: #cbdcc9 !important;
-  background: #eaf2e9 !important;
-  color: #246b52 !important;
+  border-color: #cbdcc9;
+  background: #eaf2e9;
+  color: #246b52;
 }
 
 @media (max-width: 480px) {

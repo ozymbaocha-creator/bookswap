@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import Navbar from '../components/Navbar'
 import WelcomeSection from '../components/WelcomeSection'
 import SearchBar from '../components/SearchBar'
@@ -7,47 +7,68 @@ import ResourceGrid from '../components/ResourceGrid'
 import ItemDetailsModal from '../components/ItemDetailsModal'
 import Footer from '../components/Footer'
 import './Discover.css'
+import { getCurrentUser } from '../lib/auth'
+
+async function fetchResources() {
+  const response = await fetch('/resources.json')
+
+  if (!response.ok) {
+    throw new Error('Unable to load resources.')
+  }
+
+  const data = await response.json()
+
+  if (!Array.isArray(data)) {
+    throw new Error('The resource data is not in the expected format.')
+  }
+
+  return data
+}
 
 function Discover() {
   const [resources, setResources] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
-
   const [search, setSearch] = useState('')
   const [activeCategory, setActiveCategory] = useState('All Items')
   const [selectedItem, setSelectedItem] = useState(null)
   const [swappedItems, setSwappedItems] = useState([])
 
-  async function loadResources() {
+  const loadResources = useCallback(async () => {
     setLoading(true)
     setError('')
 
     try {
-      const response = await fetch('/resources.json')
-
-      if (!response.ok) {
-        throw new Error('Unable to load resources.')
-      }
-
-      const data = await response.json()
-
-      if (!Array.isArray(data)) {
-        throw new Error('The resource data is not in the expected format.')
-      }
-
-      setResources(data)
+      setResources(await fetchResources())
     } catch (err) {
       console.error('BookSwap resource loading error:', err)
-        setError(
-        'We could not load the resources. Please check your connection and try again.'
-      )
+      setError('We could not load the resources. Please check your connection and try again.')
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
 
   useEffect(() => {
-    loadResources()
+    let cancelled = false
+
+    async function loadInitialResources() {
+      try {
+        const data = await fetchResources()
+        if (!cancelled) setResources(data)
+      } catch (err) {
+        console.error('BookSwap resource loading error:', err)
+        if (!cancelled) {
+          setError('We could not load the resources. Please check your connection and try again.')
+        }
+      } finally {
+        if (!cancelled) setLoading(false)
+      }
+    }
+
+    loadInitialResources()
+    return () => {
+      cancelled = true
+    }
   }, [])
 
   const filteredResources = useMemo(() => {
@@ -55,23 +76,24 @@ function Discover() {
 
     return resources.filter((item) => {
       const matchesCategory =
-        activeCategory === 'All Items' ||
-        item.category === activeCategory
-
+        activeCategory === 'All Items' || item.category === activeCategory
       const matchesSearch = [
         item.title,
         item.category,
         item.department,
         item.description,
-      ].some((value) =>
-        String(value ?? '').toLowerCase().includes(searchTerm)
-      )
+      ].some((value) => String(value ?? '').toLowerCase().includes(searchTerm))
 
       return matchesCategory && matchesSearch
     })
   }, [resources, search, activeCategory])
 
   function handleSwap(item) {
+    if (!getCurrentUser()) {
+      window.location.href = '/unauthorized'
+      return
+    }
+
     setSwappedItems((current) =>
       current.includes(item.id)
         ? current.filter((id) => id !== item.id)
@@ -84,6 +106,8 @@ function Discover() {
     setActiveCategory('All Items')
   }
 
+  const closeDetails = useCallback(() => setSelectedItem(null), [])
+
   return (
     <div className="discover-page" id="discover">
       <Navbar />
@@ -91,38 +115,29 @@ function Discover() {
       <main className="discover-main">
         <WelcomeSection />
 
-        <section className="resource-section">
+        <section className="resource-section" aria-labelledby="resource-heading">
           <div className="section-heading">
             <div>
-              <h2>Discover resources</h2>
+              <h2 id="resource-heading">Discover resources</h2>
               <p>Find your next useful campus item.</p>
             </div>
-
-            <span className="resource-count">
+            <span className="resource-count" aria-live="polite">
               {loading ? 'Loading...' : `${filteredResources.length} items`}
             </span>
           </div>
 
-          <SearchBar
-            search={search}
-            onSearchChange={setSearch}
-          />
-
+          <SearchBar search={search} onSearchChange={setSearch} />
           <CategoryFilter
             activeCategory={activeCategory}
             onCategoryChange={setActiveCategory}
           />
 
           {loading ? (
-            <p role="status" className="resource-message">
-              Loading campus resources...
-            </p>
+            <p role="status" className="resource-message">Loading campus resources...</p>
           ) : error ? (
             <div className="resource-message" role="alert">
               <p>{error}</p>
-              <button type="button" onClick={loadResources}>
-                Retry
-              </button>
+              <button type="button" onClick={loadResources}>Retry</button>
             </div>
           ) : resources.length === 0 ? (
             <div className="resource-message">
@@ -131,9 +146,7 @@ function Discover() {
           ) : filteredResources.length === 0 ? (
             <div className="resource-message">
               <p>No resources match your search or selected category.</p>
-              <button type="button" onClick={clearFilters}>
-                Clear filters
-              </button>
+              <button type="button" onClick={clearFilters}>Clear filters</button>
             </div>
           ) : (
             <ResourceGrid
@@ -141,7 +154,6 @@ function Discover() {
               onSwap={handleSwap}
               onViewDetails={setSelectedItem}
               swappedItems={swappedItems}
-              onClearFilters={clearFilters}
             />
           )}
         </section>
@@ -149,10 +161,7 @@ function Discover() {
         <Footer />
       </main>
 
-      <ItemDetailsModal
-        item={selectedItem}
-        onClose={() => setSelectedItem(null)}
-      />
+      <ItemDetailsModal item={selectedItem} onClose={closeDetails} />
     </div>
   )
 }

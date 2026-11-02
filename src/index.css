@@ -215,3 +215,7 @@ code {
     @apply font-sans;
   }
 }
+:focus-visible {
+  outline: 3px solid #397357;
+  outline-offset: 3px;
+}
